@@ -7,15 +7,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestBankingSystem {
-	FactoryCustomer factoryCustomer;
-	AccountantController controller;
-	Account account;
+	private FactoryCustomer factoryCustomer;
+	private AccountantController controller;
+	private Account account;
+	private CustomerSerializer customerSerializer;
+	private String savedData;
 	
 
 	@Before
 	public void setUp()  {
 	factoryCustomer = new FactoryCustomer();
 	controller = new AccountantController();	
+	savedData = "./savedData.json";
+	
 	}
 
 	@Test

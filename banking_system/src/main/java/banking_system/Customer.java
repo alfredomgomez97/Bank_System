@@ -2,11 +2,6 @@ package banking_system;
 
 import java.util.ArrayList;
 
-
-
-
-
-
 public class Customer {
 	private static int idAssigner = 1000;
 	private int customerId;
