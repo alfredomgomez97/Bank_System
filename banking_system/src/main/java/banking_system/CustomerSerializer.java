@@ -15,6 +15,7 @@ public class CustomerSerializer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String saveLocation;
+	
 	public CustomerSerializer(String savedLocation) {
 		this.saveLocation = savedLocation;
 	}
@@ -34,6 +35,7 @@ public class CustomerSerializer implements Serializable {
 	}
 	public Customer deserialize() {
 		Customer loadedCustomer = null;
+		
 		File file = new File(saveLocation);
 		ObjectMapper mapper = new ObjectMapper();
 		try {

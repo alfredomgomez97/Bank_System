@@ -1,6 +1,6 @@
 package banking_system;
 
-public abstract class Account {
+public class Account {
 	private int AccountId;
 	private float balance = 0.0f;
 	private static int idAssigner = 100000;
@@ -24,7 +24,8 @@ public abstract class Account {
 	public void setBalance(float balance) {
 		this.balance = balance;
 	}
-	public abstract void withdrawBalance(float amount);
+	public void withdrawBalance(float amount) {
+	}
 	public void depositBalance(float amount) {
 		balance = balance + amount;
 	}

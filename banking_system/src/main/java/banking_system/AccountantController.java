@@ -26,8 +26,8 @@ public class AccountantController {
 			AccountantController.allAccounts = allAccounts;
 		}
 
-		public Customer createCustomer(String name, int stateId,ArrayList<Account> accounts) {
-			Customer customerCreated = factoryCustomer.createCustomer(name, stateId, accounts);
+		public Customer createCustomer(String name, int stateId,ArrayList<Account> expectedAccounts) {
+			Customer customerCreated = factoryCustomer.createCustomer(name, stateId, expectedAccounts);
 			allCustomers.put(customerCreated.getCustomerId(), customerCreated);
 			return customerCreated;
 			

@@ -2,21 +2,18 @@ package banking_system;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class Customer {
 	private static int idAssigner = 1000;
 	private int customerId;
 	private String Name;
 	private int stateid;
+	@JsonDeserialize(using=AccountsDeserializer.class)
 	private ArrayList<Account> Accounts = new ArrayList<>();
 	
-	
-	
-	public Customer(int customerId, String name, int stateid, ArrayList<Account> accounts) {
-		this.customerId = customerId;
-		Name = name;
-		this.stateid = stateid;
-		Accounts = accounts;
-	}
+
 	public int getStateid() {
 		return stateid;
 	}
@@ -26,8 +23,8 @@ public class Customer {
 	public ArrayList<Account> getAccounts() {
 		return Accounts;
 	}
-	public void setAccounts(ArrayList<Account> accounts) {
-		Accounts = accounts;
+	public void setAccounts(ArrayList<Account> Accounts) {
+		this.Accounts = Accounts;
 	}
 	public String getName() {
 		return Name;
@@ -61,6 +58,7 @@ public class Customer {
 		setCustomerId(idAssigner++);
 		idAssigner += 1;
 	}
+	
 	
 
 

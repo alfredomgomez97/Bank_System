@@ -9,17 +9,25 @@ import org.junit.Test;
 public class TestBankingSystem {
 	private FactoryCustomer factoryCustomer;
 	private AccountantController controller;
-	private Account account;
+	private CheckingAccount account;
 	private CustomerSerializer customerSerializer;
 	private String savedData;
+	private String firstCustomerName;
+	private ArrayList<Account> customerAccounts;
+	private int id = 1234;
+	private Customer expectedCustomer;
 	
 
 	@Before
 	public void setUp()  {
 	factoryCustomer = new FactoryCustomer();
-	controller = new AccountantController();	
+	controller = new AccountantController();
+	customerAccounts = new ArrayList<>();
 	savedData = "./savedData.json";
-	
+	customerSerializer = new CustomerSerializer(savedData);
+	account = new CheckingAccount();
+	customerAccounts.add(account);
+	expectedCustomer = factoryCustomer.createCustomer(firstCustomerName, id, customerAccounts);
 	}
 
 	@Test
@@ -42,19 +50,14 @@ public class TestBankingSystem {
 	String expectedName = "John";
 	int expectedId = 12345;
 	ArrayList<Account> expectedAccounts = new ArrayList<>();
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
+	Customer expectedCustomerFromHashMap = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	//Act & Assert
-	assertTrue(expectedCustomer.equals(controller.getCustomer(expectedCustomer)));
+	assertTrue(expectedCustomerFromHashMap.equals(controller.getCustomer(expectedCustomerFromHashMap)));
 	}
 	
 	@Test 
 	public void TestThatACustomerHasACheckingAccount() {
-	//Arrange
-	String expectedName = "John";
-	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
-	//Act
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
+	
 	Account actualAccount = controller.createAccount("Checking", expectedCustomer);
 	//Assert
 	boolean statement = false;
@@ -66,11 +69,9 @@ public class TestBankingSystem {
 	public void TestThatTheDepositMethodUpdatesTheCustomersCheckingBalance() {
 	//Arrange
 	float expectedBalance = 20.00f;
-	String expectedName = "John";
-	int expectedId = 12345;
 	ArrayList<Account> expectedAccounts = new ArrayList<>();
 	//act
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
+	
 	Account expectedAccount =  controller.createAccount("Checking", expectedCustomer);
 	controller.getAccount(expectedAccount.getAccountId()).depositBalance(expectedBalance);
 	float actualBalance = controller.getAccount(expectedAccount.getAccountId()).getBalance();
@@ -80,12 +81,8 @@ public class TestBankingSystem {
 	public void TestThatTheDepositMethodUpdatesTheCustomersSavingsBalance() {
 	//Arrange
 	float expectedBalance = 20.00f;
-	String expectedName = "John";
-	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
-	//act
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	Account expectedAccount = controller.createAccount("Savings", expectedCustomer);
+	//act
 	controller.getAccount(expectedAccount.getAccountId()).depositBalance(expectedBalance);
 	float actualBalance = controller.getAccount(expectedAccount.getAccountId()).getBalance();
 	Assert.assertEquals(expectedBalance,actualBalance,0.0f);
@@ -96,11 +93,7 @@ public class TestBankingSystem {
 	float Balance = 20.00f;
 	float balanceWithdrawn = 4.00f;
 	float expectedBalance = 16.00f;
-	String expectedName = "John";
-	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
 	//Act
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	Account expectedAccount = controller.createAccount("Savings", expectedCustomer);
 	controller.getAccount(expectedAccount.getAccountId()).depositBalance(Balance);
 	controller.getAccount(expectedAccount.getAccountId()).withdrawBalance(balanceWithdrawn);	
@@ -114,11 +107,7 @@ public class TestBankingSystem {
 	float Balance = 20.00f;
 	float balanceWithdrawn = 4.00f;
 	float expectedBalance = 16.00f;
-	String expectedName = "John";
-	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
 	//Act
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	Account expectedAccount = controller.createAccount("Checking", expectedCustomer);
 	controller.getAccount(expectedAccount.getAccountId()).depositBalance(Balance);
 	controller.getAccount(expectedAccount.getAccountId()).withdrawBalance(balanceWithdrawn);	
@@ -128,11 +117,7 @@ public class TestBankingSystem {
 	}
 	@Test
 	public void TestRemoveCheckingAccountFromCustomer() {
-	String expectedName = "John";
 	String accountType = "Checking";
-	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
-	Customer expectedCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	Account cheackingAccount = controller.createAccount(accountType, expectedCustomer);	
 	//Act
 	controller.removeAccount(cheackingAccount);
@@ -140,10 +125,18 @@ public class TestBankingSystem {
 	//Assert
 	assertFalse(statement);
 	}
-	@Test
-	public void RemoveCustomerFromTheSystem() {
-		
-	}
 	
+	@Test
+	public void TestTheSerializationAndDeserializationOfACustomer() {
+	//Arrange 
+	String expectedName = "Elon";
+	expectedCustomer.setName(expectedName);
+	customerSerializer.serialize(expectedCustomer);
+	//Act
+	Customer deserializedCustomer = customerSerializer.deserialize();
+	String actualName = deserializedCustomer.getName();
+	//Assert
+	assertEquals(expectedName,actualName);
+	}
 
 }

@@ -1,0 +1,9 @@
+{
+  "customerId" : 100007,
+  "stateid" : 100007,
+  "name" : "Elon",
+  "accounts" : [ {
+    "balance" : 0.0,
+    "accountId" : 0
+  } ]
+}
