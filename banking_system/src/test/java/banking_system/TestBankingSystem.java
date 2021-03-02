@@ -138,5 +138,17 @@ public class TestBankingSystem {
 	//Assert
 	assertEquals(expectedName,actualName);
 	}
-
+	@Test
+	public void TestTheCustomerHasTheSameBalanceAfterSerialization() {
+		//Arrange
+		float expectedBalance = 20.00f;
+		expectedCustomer.getAccounts().get(0).setBalance(expectedBalance); 
+		customerSerializer.serialize(expectedCustomer);
+		//Act
+		Customer deserializedCustomer = customerSerializer.deserialize();
+		float actualBalance = deserializedCustomer.getAccounts().get(0).getBalance();
+		//Assert
+		assertTrue(expectedBalance == actualBalance);
+		
+	}
 }
