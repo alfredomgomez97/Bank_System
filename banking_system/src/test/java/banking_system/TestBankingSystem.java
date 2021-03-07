@@ -13,7 +13,7 @@ public class TestBankingSystem {
 	private CustomerSerializer customerSerializer;
 	private String savedData;
 	private String firstCustomerName;
-	private ArrayList<Account> customerAccounts;
+	private ArrayList<CheckingAccount> customerAccounts;
 	private int id = 1234;
 	private Customer expectedCustomer;
 	
@@ -35,7 +35,7 @@ public class TestBankingSystem {
 	//Arrange
 	String expectedName = "John";
 	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
+	ArrayList<CheckingAccount> expectedAccounts = new ArrayList<>();
 	//Act
 	Customer actualCustomer = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	boolean statement = false;
@@ -49,7 +49,7 @@ public class TestBankingSystem {
 	//Arrange
 	String expectedName = "John";
 	int expectedId = 12345;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
+	ArrayList<CheckingAccount> expectedAccounts = new ArrayList<>();
 	Customer expectedCustomerFromHashMap = controller.createCustomer(expectedName, expectedId, expectedAccounts);
 	//Act & Assert
 	assertTrue(expectedCustomerFromHashMap.equals(controller.getCustomer(expectedCustomerFromHashMap)));
@@ -69,7 +69,6 @@ public class TestBankingSystem {
 	public void TestThatTheDepositMethodUpdatesTheCustomersCheckingBalance() {
 	//Arrange
 	float expectedBalance = 20.00f;
-	ArrayList<Account> expectedAccounts = new ArrayList<>();
 	//act
 	
 	Account expectedAccount =  controller.createAccount("Checking", expectedCustomer);
@@ -94,7 +93,7 @@ public class TestBankingSystem {
 	float balanceWithdrawn = 4.00f;
 	float expectedBalance = 16.00f;
 	//Act
-	Account expectedAccount = controller.createAccount("Savings", expectedCustomer);
+	CheckingAccount expectedAccount = controller.createAccount("Savings", expectedCustomer);
 	controller.getAccount(expectedAccount.getAccountId()).depositBalance(Balance);
 	controller.getAccount(expectedAccount.getAccountId()).withdrawBalance(balanceWithdrawn);	
 	float actualBalance = controller.getAccount(expectedAccount.getAccountId()).getBalance();
@@ -121,7 +120,7 @@ public class TestBankingSystem {
 	Account cheackingAccount = controller.createAccount(accountType, expectedCustomer);	
 	//Act
 	controller.removeAccount(cheackingAccount);
-	boolean statement = controller.getAllAccounts().containsKey(expectedCustomer.getCustomerId());
+	boolean statement = AccountantController.getAllAccounts().containsKey(expectedCustomer.getCustomerId());
 	//Assert
 	assertFalse(statement);
 	}
@@ -130,6 +129,8 @@ public class TestBankingSystem {
 	public void TestTheSerializationAndDeserializationOfACustomer() {
 	//Arrange 
 	String expectedName = "Elon";
+	CheckingAccount checkingAccount = new CheckingAccount();
+	expectedCustomer.getAccounts().add(checkingAccount);
 	expectedCustomer.setName(expectedName);
 	customerSerializer.serialize(expectedCustomer);
 	//Act

@@ -1,6 +1,8 @@
 package banking_system;
 
 public class CheckingAccount extends Account{
+	
+	private String accountType = "CHECKING";
 	private int monthlyWithdrawLimit = 6;
 	
 	
@@ -12,6 +14,11 @@ public class CheckingAccount extends Account{
 		}else {
 			System.out.println("You've reached your monthly limit");
 		}
+	}
+
+
+	public String getAccountType() {
+		return accountType;
 	}
 	
 	

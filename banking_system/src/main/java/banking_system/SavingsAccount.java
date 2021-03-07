@@ -3,6 +3,7 @@ package banking_system;
 public class SavingsAccount extends Account{
 	private float interest;
 	private float interestAccrude;
+	private String accountType = "SAVINGS";
 	
 	
 	public float getInterest() {
@@ -35,6 +36,11 @@ public class SavingsAccount extends Account{
 		}
 		
 		
+	}
+
+
+	public String getAccountType() {
+		return accountType;
 	}
 	
 	

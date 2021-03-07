@@ -11,21 +11,22 @@ public class Customer {
 	private String Name;
 	private int stateid;
 	@JsonDeserialize(using=AccountsDeserializer.class)
-	private ArrayList<Account> Accounts = new ArrayList<>();
+	private ArrayList<CheckingAccount> checkingAccounts = new ArrayList<>();
 	
 
+	public ArrayList<CheckingAccount> getAccounts() {
+		return checkingAccounts;
+	}
+	public void setAccounts(ArrayList<CheckingAccount> accounts) {
+		checkingAccounts = accounts;
+	}
 	public int getStateid() {
 		return stateid;
 	}
 	public void setStateid(int stateid) {
 		this.stateid = stateid;
 	}
-	public ArrayList<Account> getAccounts() {
-		return Accounts;
-	}
-	public void setAccounts(ArrayList<Account> Accounts) {
-		this.Accounts = Accounts;
-	}
+	
 	public String getName() {
 		return Name;
 	}

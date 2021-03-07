@@ -26,27 +26,27 @@ public class AccountantController {
 			AccountantController.allAccounts = allAccounts;
 		}
 
-		public Customer createCustomer(String name, int stateId,ArrayList<Account> expectedAccounts) {
+		public Customer createCustomer(String name, int stateId,ArrayList<CheckingAccount> expectedAccounts) {
 			Customer customerCreated = factoryCustomer.createCustomer(name, stateId, expectedAccounts);
 			allCustomers.put(customerCreated.getCustomerId(), customerCreated);
 			return customerCreated;
 			
 		}
 		
-		public Account createAccount(String accountType,Customer customer ) {
+		public CheckingAccount createAccount(String accountType,Customer customer ) {
 			String CheckingAccount = "Checking";
 			String SavingsAccount = "Savings";
-			Account account;
+			CheckingAccount account;
 			if(accountType.equals(CheckingAccount)) {
 				account = new CheckingAccount();
 				account.setAccountId(account.idGenerator());
-				customer.getAccounts().add(account);
+				customer.getAccounts().add( account);
 				allAccounts.put(account.getAccountId(), account);
 				return account;
 			}else if(accountType.equals(SavingsAccount)) {
-				account = new SavingsAccount();
+				account = new CheckingAccount();
 				account.setAccountId(account.idGenerator());
-				customer.getAccounts().add(account);
+				customer.getAccounts().add( account);
 				allAccounts.put(account.getAccountId(), account);
 				return account;
 			}

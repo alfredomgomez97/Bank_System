@@ -7,7 +7,7 @@ public class FactoryCustomer {
 	private Customer customer;
 	private static int Idgenerator = 100000;
 	
-	public Customer createCustomer(String name, int stateId,ArrayList<Account> expectedAccounts) {
+	public Customer createCustomer(String name, int stateId,ArrayList<CheckingAccount> expectedAccounts) {
 		customer = new Customer();
 		customer.setName(name);
 		customer.setAccounts(expectedAccounts);

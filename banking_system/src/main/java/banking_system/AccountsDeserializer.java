@@ -8,23 +8,23 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class AccountsDeserializer  extends JsonDeserializer<ArrayList<Account>>{
+public class AccountsDeserializer extends JsonDeserializer<List<CheckingAccount>>{
 
 	@Override
-	public ArrayList<Account> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		System.out.println("it came here1");
-		ArrayList<Account> accounts = new ArrayList<>();
+	public List<CheckingAccount> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		CheckingAccount[] myObjects = mapper.readValue(p, CheckingAccount[].class);
-		for(CheckingAccount account:myObjects) {
-			accounts.add(account);
+		ArrayList<CheckingAccount> checkingAccounts = new ArrayList<>();
+		for(CheckingAccount acc: myObjects ) {
+			checkingAccounts.add(acc);
 		}
-		System.out.println("it came here");
-		return accounts;
+		
+		return checkingAccounts;
 	}
 
 }

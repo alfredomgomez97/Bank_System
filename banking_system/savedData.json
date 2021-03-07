@@ -1,9 +1,14 @@
 {
   "customerId" : 100008,
   "stateid" : 100008,
+  "name" : "Elon",
   "accounts" : [ {
     "balance" : 0.0,
+    "accountType" : "CHECKING",
     "accountId" : 0
-  } ],
-  "name" : "Elon"
+  }, {
+    "balance" : 0.0,
+    "accountType" : "CHECKING",
+    "accountId" : 0
+  } ]
 }
